@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>**1、下载php7.3**</title>
+        <style>
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </head>
+    <body class="vscode-light">
+        <h1 id="1下载php73"><strong>1、下载php7.3</strong></h1>
+<pre><code>https://windows.php.net/download#php-7.3-ts-VC15-x64
+</code></pre>
+<ol>
+<li>
+<p>PHP根目录下的php.ini-development复制一份并改名为php.ini</p>
+</li>
+<li>
+<p>找到extension_dir，修改为，我的路径</p>
+<pre><code> extension_dir = &quot;E:\php\php7.3/ext&quot;
+</code></pre>
+</li>
+<li>
+<p>环境变量path新增</p>
+<pre><code> E:\php\php7.3
+</code></pre>
+</li>
+<li>
+<p>备注，php.ini下面的几条常用配置，去掉前面的分号，保存.(没测试过)</p>
+<pre><code> ;extension=curl
+ ;extension=gd2
+ ;extension=mbstring
+ ;extension=mysqli
+ ;extension=openssl
+ ;extension=pdo_mysql
+ ;extension=pdo_oci
+ ;extension=pdo_odbc
+ ;extension=pdo_pgsql
+ ;extension=pdo_sqlite
+ ;extension=pgsql
+</code></pre>
+</li>
+</ol>
+<h1 id="2下载对应的vc"><strong>2、下载对应的vc</strong></h1>
+<pre><code>PHP 7.0 和 7.1 需要 VC CRT 14（Visual Studio 2015）。 PHP 7.2, 7.3 and 7.4 需要 VC CRT 15 (Visual Studio 2017)。 微软的开发环境 Visual Studio 2019 包含了编译 PHP 的全部环境要求，请参阅 » https://visualstudio.microsoft.com/downloads/。
+</code></pre>
+<h1 id="3下载apache-loungeapache不提供现成的编译包下载第三方的"><strong>3、下载Apache Lounge（apache不提供现成的编译包，下载第三方的）</strong></h1>
+<pre><code>https://www.apachelounge.com/download/VC15/
+</code></pre>
+<ol>
+<li>
+<p>放到C盘下面
+C:\Apache24</p>
+</li>
+<li>
+<p>打开文件</p>
+<pre><code> C:\Apache24\conf\httpd.conf
+</code></pre>
+</li>
+<li>
+<p>修改如下相关</p>
+<pre><code>  LoadModule php7_module &quot;E:\php\php7.3\php7apache2_4.dll&quot; 
+ &lt;IfModule php7_module&gt; 
+     PHPIniDir &quot;E:\php\php7.3&quot;
+     AddType application/x-httpd-php .php
+     AddType application/x-httpd-php-source .phps
+ &lt;/IfModule&gt; 
+
+ &lt;IfModule dir_module&gt;
+     DirectoryIndex index.html index.php
+ &lt;/IfModule&gt;
+</code></pre>
+</li>
+<li>
+<p>安装Apache服务</p>
+<p>4.1 管理员权限打开CMD，进入Apache的bin目录</p>
+<p>4.2 输入以下命令，进行Apache服务的安装，出现The 'Apache2.4' service is successfully installed.</p>
+<pre><code> httpd.exe -k install
+</code></pre>
+<p>4.3 C:\Apache24\htdocs下面，新增index,php文件，内容是</p>
+<pre><code> &lt;?php 
+ echo phpinfo();
+</code></pre>
+</li>
+<li>
+<p>备注</p>
+<p>5.1 如果更改php文件目录，找到 <code>DocumentRoot &quot;${SRVROOT}/htdocs&quot;</code>，将&quot;${SRVROOT}/htdocs&quot;改成你的web目录，即你想存放web工程的地方。</p>
+<p>5.2 如果Apache2.4不放在C盘下面，修改Apache目录找到<code>Define SRVROOT &quot;/Apache24&quot;</code>，将&quot;/Apache24&quot;改成Apache所在的目录</p>
+<p>5.3 有一个说法,把Require all denied改成Require all granted,未验证是做什么用的</p>
+<pre><code> &lt;Directory /&gt;
+     AllowOverride none
+     Require all denied
+ &lt;/Directory&gt;
+</code></pre>
+</li>
+</ol>
+<h1 id="4测试"><strong>4、测试</strong></h1>
+<ol>
+<li>
+<p>管理员权限打开CMD，进入Apache的bin目录</p>
+</li>
+<li>
+<p>输入以下命令，启动Apache服务</p>
+<pre><code> net start Apache2.4
+</code></pre>
+</li>
+<li>
+<p>测试</p>
+<pre><code> http://localhost/index.php
+</code></pre>
+</li>
+</ol>
+
+    </body>
+    </html>

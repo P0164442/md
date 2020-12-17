@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>**1、创建**</title>
+        <style>
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-light">
+        <pre><code>    创建之前，请先确认安装了node.js，和vue的脚手架和webpack
+</code></pre>
+<h1 id="1创建"><strong>1、创建</strong></h1>
+<ol>
+<li>
+<p>如果要在D盘新建项目，在cmd命令窗口转到D盘，运行</p>
+<pre><code> Vue init webpack vuedemo
+</code></pre>
+</li>
+<li>
+<p>之后会有一系列提示，直接默认就可以。最后执行结束后</p>
+<pre><code> cd vuedemo
+ npm run dev
+</code></pre>
+</li>
+<li>
+<p>访问http://localhost:8080即可预览。</p>
+</li>
+<li>
+<p>创建后文件目录讲解,更具体的自行百度。</p>
+</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/2019040120135655.png" alt="VUE项目基本架构目录"></p>
+<p>上面是基本架构目录，结合我们现在的目录再说一下：</p>
+<ol>
+<li>
+<p>build/utils.js
+当初是springboot项目，将VUE打包后作为静态资源放在static目录下用的，前后端分离的需要测试下。<br>
+<font color="red"  > publicPath: '../../' </font></p>
+<pre><code> if (options.extract) {
+         return ExtractTextPlugin.extract({
+         use: loaders,
+         fallback: 'vue-style-loader',
+        publicPath: '../../'     //解决部署后css路径不对问题 
+         })        } 
+</code></pre>
+</li>
+<li>
+<p>onfig/index.js修改</p>
+<pre><code> assetsPublicPath: '/',//解决静态文件路径问题
+ autoOpenBrowser: true,//dev时，编译完成后自动打开浏览器
+ useEslint: false,//取消语法检查
+</code></pre>
+</li>
+</ol>
+<h1 id="2增加标签页icon"><strong>2、增加标签页icon</strong></h1>
+<ol>
+<li>
+<p>favicon.ico文件放在根目录下</p>
+</li>
+<li>
+<p>webpack.prod.conf.js， webpack.prod.dev.js修改，在 inject: true 这一行下面增加</p>
+<pre><code> favicon: path.resolve('./favicon.ico'),
+</code></pre>
+</li>
+<li>
+<p>在index.html下面新增</p>
+<pre><code> &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;./favicon.ico&quot; rel=&quot;external nofollow&quot; /&gt;
+</code></pre>
+</li>
+</ol>
+<h1 id="3深入"><strong>3、深入</strong></h1>
+<p>我们需要安装各种插件</p>
+<pre><code>    cnpm install element-ui –save（必须，如果不行换   cnpm i element-ui -S）
+    cnpm install axios --save（必须）
+    cnpm install vuex --save（必须）
+    cnpm install js-md5 --save
+    cnpm install vue-router --save（必须）
+    cnpm install echarts --save
+</code></pre>
+<h1 id="4进阶"><strong>4、进阶</strong></h1>
+<p><font color="#4590a3" size="6px">文字</font></p>
+
+    </body>
+    </html>
