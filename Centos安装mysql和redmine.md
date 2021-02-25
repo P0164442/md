@@ -216,7 +216,11 @@ docker ps -a
 ```bash
 docker rm -f 容器id
 ```
- 
+ 重启后，重新启动容器
+```bash
+sudo docker ps -a
+  sudo docker start 5e9c6015f069
+```
 
 报错
 CentOS 8中安装Docker出现和Podman冲突 problem with installed package podman-1.4.2-5.module_el8.1.0+237+63e26edc.x86_64
